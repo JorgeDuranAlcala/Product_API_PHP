@@ -4,29 +4,32 @@
     class Product
     {
 
-        public function __construct($type) {
-            $this->type = $type;
+        public function __construct() {
+            
         }
 
-        static public function createProduct($req)
+        public  function createProduct($req)
         {
             return json_encode($req->getBody());
         }
-
-        static public function getByIdProduct()
+        
+        public  function getByIdProduct($req)
         {
             # code...
+            return "Get product by id";
         }
-        static public function getAllProducts()
+        public  function getAllProducts($req)
+        {
+            return "Get all products";
+        }
+        public  function deleteProduct($req)
         {
             # code...
+            return "delete product";
         }
-        static public function deleteProduct()
+        public  function updateProduct($req)
         {
-            # code...
-        }
-        static public function updateProduct()
-        {
+            return json_encode($req->getBody());
             # code...
         }
     }

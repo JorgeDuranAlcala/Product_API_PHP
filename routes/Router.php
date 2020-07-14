@@ -7,7 +7,8 @@
         private $request;
         private $allowedHttpMethods = array(
             "GET",
-            "POST"
+            "POST",
+            "PUT"
         );
 
         public function __construct(Request $req) {

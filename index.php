@@ -10,17 +10,14 @@
 
     $req = new Request();
     $router = new Router($req);
+    $myControl = new controller\Product();
 
-    $router->get('/getProduct', function($req) {
-         print_r($req);
-    });
+    
+    $router->get('/getProduct', [$myControl, "getAllProducts"]);
 
-    $router->post('/getProduct', controller\Product::createProduct); 
+    $router->post('/getProduct', [$myControl, "createProduct"]); 
 
-    $router->put('/getProduct', function($req) {
-         $body = $req->getBody();
-        return json_encode($body);
-    }); 
+    $router->post('/getProduct', [$myControl, "updateProduct"]); 
 
 
 ?>
