@@ -8,9 +8,26 @@
             $this->type = $type;
         }
 
-        public function sayHello()
+        static public function createProduct($req)
         {
-            return "QLQ man";
+            return json_encode($req->getBody());
+        }
+
+        static public function getByIdProduct()
+        {
+            # code...
+        }
+        static public function getAllProducts()
+        {
+            # code...
+        }
+        static public function deleteProduct()
+        {
+            # code...
+        }
+        static public function updateProduct()
+        {
+            # code...
         }
     }
     
