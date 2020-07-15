@@ -1,6 +1,8 @@
 <?php
     namespace database;
 
+    include('database/db.php');
+
     use database as db;
 
     class Users extends db\Database

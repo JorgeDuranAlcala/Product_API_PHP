@@ -1,35 +1,89 @@
 <?php
     namespace controllers;
 
+    include("database/Product.php");
+
+    use utils as util;
+    use database as db;
+
     class Product
     {
 
+        private $productDB;
+
         public function __construct() {
             
+            $this->productDB = new db\Product();
+
         }
 
         public  function createProduct($req)
         {
-            return json_encode($req->getBody());
+
+            $body = $req->getBody();
+
+            
+            $data = [];
+            
+            foreach ($body as $key => $value) {
+                # code...
+                array_push($data, $value);
+            }
+            
+            list($name, $category, $price) = $data;
+            $result = $this->productDB->createProduct($name, $category, $price);
+
+            return json_encode($result);
         }
         
         public  function getByIdProduct($req)
         {
             # code...
-            return "Get product by id";
+            $param = $req->queryString;
+            $arr = preg_split("/\=/", $param);
+            $id = $arr[1];
+
+            $product = $this->productDB->getProductById($id);
+
+            return json_encode(array("message"=>"Succesfuly Request", "product" => $product));
         }
-        public  function getAllProducts($req)
+        public function getAllProducts($req)
         {
-            return "Get all products";
+
+            $products = $this->productDB->getAllProducts();
+
+            return json_encode(array("message"=>"Get all Products", "products" => $products));
         }
-        public  function deleteProduct($req)
+        public function deleteProduct($req)
         {
-            # code...
-            return "delete product";
+            $param = $req->queryString;
+            $arr = preg_split("/\=/", $param);
+            $id = $arr[1];
+
+            $result = $this->productDB->deleteProduct($id);
+            
+            return json_encode($result);
         }
         public  function updateProduct($req)
         {
-            return json_encode($req->getBody());
+            $body = $req->getBody();
+
+            
+            $data = [];
+            
+            foreach ($body as $key => $value) {
+                # code...
+                array_push($data, $value);
+            }
+            
+            list($name, $category, $price) = $data;
+            $param = $req->queryString;
+            $arr = preg_split("/\=/", $param);
+            $id = $arr[1];
+
+            $result = $this->productDB->updateProduct($id, $name, $category, $price);
+
+            return json_encode($result);
             # code...
         }
     }

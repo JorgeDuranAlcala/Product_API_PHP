@@ -7,8 +7,7 @@
         private $request;
         private $allowedHttpMethods = array(
             "GET",
-            "POST",
-            "PUT"
+            "POST"
         );
 
         public function __construct(Request $req) {
@@ -43,22 +42,26 @@
         public function formatRoute(string $route)
         {
             # code...
+            
             $result = rtrim($route, '/');
 
             if($result === '') { 
                 return '/';
             }
-
+            
             return $result;
         }
-
+        
         private function resolve()
         {
             # code...
             $methodDictionary = $this->{strtolower($this->request->requestMethod)};
             $formatedRoute =  $this->formatRoute($this->request->requestUri);
-            $method = $methodDictionary[$formatedRoute];
+            preg_match_all("/\?[a-z]+\=\w+/", $formatedRoute, $matches);
+            $formatedRoute = str_replace($matches[0], "", $formatedRoute);
 
+            $method = $methodDictionary[$formatedRoute];
+            
             if(is_null($method)) {
                 $this->defaultRequestHandler();
             }
