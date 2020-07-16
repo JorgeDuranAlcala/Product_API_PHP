@@ -1,6 +1,7 @@
 <?php 
     declare(strict_types=1);
     include("controllers/product.controller.php");
+    include("controllers/users.controller.php");
     include_once("utils/Request.php");
     include_once("routes/Router.php");
 
@@ -9,17 +10,22 @@
 
     $req = new Request();
     $router = new Router($req);
-    $myControl = new controller\Product();
-    //$pro = util\Product::createProduct("huawei", "phone", 400);
+    $productControl = new controller\Product();
+    $userControl = new controller\Users();
+
 
     $router->get('/', function($req) {
         header("Location: view/index.php");
     });
-    $router->get('/api', [$myControl, "getAllProducts"]);
-    $router->get('/api/getProductById', [$myControl, "getByIdProduct"]);
-    $router->get('/api/deleteProduct', [$myControl, "deleteProduct"]);
-    $router->post('/api/createProduct', [$myControl, "createProduct"]); 
-    $router->post('/api/updateProduct', [$myControl, "updateProduct"]); 
+    $router->get('/api', [$productControl, "getAllProducts"]);
+    $router->get('/api/getProductById', [$productControl, "getByIdProduct"]);
+    $router->get('/api/deleteProduct', [$productControl, "deleteProduct"]);
+    $router->post('/api/createProduct', [$productControl, "createProduct"]); 
+    $router->post('/api/updateProduct', [$productControl, "updateProduct"]); 
+
+    /* Authentication */
+
+    $router->post('/api/signup', [$userControl, "signup"]);
 
 
 ?>

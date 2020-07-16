@@ -1,7 +1,7 @@
 <?php
     namespace controllers;
 
-    include("database/Product.php");
+    include_once("database/Product.php");
 
     use utils as util;
     use database as db;

@@ -1,12 +1,12 @@
 <?php 
     namespace database;
 
-    include('database/db.php');
+    include_once('database/db.php');
 
-    use database as db;
+    use database\Database as DB;
     
 
-    class Product extends db\Database
+    class Product extends DB
     {
 
         protected $table = "products";
