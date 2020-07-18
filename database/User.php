@@ -24,28 +24,34 @@
             $key = "jsonwebtoken";
             $time = time();
 
-            $payload = array(
-                'iat' => $time,
-                'exp' => $time + (60*60*24),
-                'data' => $user  
-            );
-
-            $token = JWT::encode($payload, $key);
-
-            $query = "INSERT INTO $this->table(username, email, password, token) VALUES('$username', '$email', '$password', '$token')";
+            
+            $query = "INSERT INTO $this->table(username, email, password) VALUES('$username', '$email', '$password')";
             $result = mysqli_query($this->conn, $query);
             
             if($result) {
+                $payload = array(
+                    'iat' => $time,
+                    'exp' => $time + (60*60*24),
+                );
+                
+                $token = JWT::encode($payload, $key);
+                $_SESSION['token'] = $token;
                 
                 return $result;
 
             } else {
-                throw new Exception("Error Processing Request" . mysqli_error($this->conn), 1);
+                print_r("Error Processing Request" . mysqli_error($this->conn), 1);
             }
         }
         public function loginUser(string $email, string $password)
         {
-
+            $query = "SELECT * FROM $this->table WHERE email='$email' AND password='$password'";
+            $result = mysqli_query($this->conn, $query);
+            if($result) {
+                return $result->fetch_assoc();
+            } else {
+                print_r("Error Processing Request" . mysqli_error($this->conn), 1);
+            }
         }
 
         

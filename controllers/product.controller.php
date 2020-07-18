@@ -45,7 +45,11 @@
 
             $product = $this->productDB->getProductById($id);
 
-            return json_encode(array("message"=>"Succesfuly Request", "product" => $product));
+            return json_encode(array(
+                "message"=>"Succesfuly Request", 
+                "product" => $product, 
+                "token" => $req->data
+            ));
         }
         public function getAllProducts($req)
         {
